@@ -335,6 +335,8 @@ void ethash_cuda_miner::search(uint8_t const* header, uint64_t target, search_ho
 		}
 	}
 	uint64_t batch_size = s_gridSize * s_blockSize;
+
+	// normally 22 times
 	for (; !exit; m_current_index++, m_current_nonce += batch_size)
 	{
 		auto stream_index = m_current_index % s_numStreams;
@@ -352,6 +354,8 @@ void ethash_cuda_miner::search(uint8_t const* header, uint64_t target, search_ho
 			for (unsigned int j = 0; j < found_count; j++)
 				nonces[j] = nonce_base + buffer[j + 1];
 		}
+
+		// buffer => g_output
 		run_ethash_search(s_gridSize, s_blockSize, m_sharedBytes, stream, buffer, m_current_nonce, m_parallelHash);
 		if (m_current_index >= s_numStreams)
 		{

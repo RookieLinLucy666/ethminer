@@ -7,9 +7,9 @@
 #include "ethash_cuda_miner_kernel.h"
 #include "ethash_cuda_miner_kernel_globals.h"
 #include "cuda_helper.h"
-
+#include <stdio.h>
 #include "fnv.cuh"
-
+//#include <cuda_profiler_api.h>
 #define copy(dst, src, count) for (int i = 0; i != count; ++i) { (dst)[i] = (src)[i]; }
 
 
@@ -21,6 +21,9 @@
 #include "dagger_shuffled.cuh"
 #endif
 
+
+// __global__ means this function is a kernel function
+// invoked by CPU, executed by GPU
 template <uint32_t _PARALLEL_HASH>
 __global__ void 
 ethash_search(
@@ -28,13 +31,16 @@ ethash_search(
 	uint64_t start_nonce
 	)
 {
+	//Global Thread ID = blockIdx.x * blockDim.x + threadIdx.x
 	uint32_t const gid = blockIdx.x * blockDim.x + threadIdx.x;	
-        uint64_t hash = compute_hash<_PARALLEL_HASH>(start_nonce + gid);
+    uint64_t hash = compute_hash<_PARALLEL_HASH>(start_nonce + gid);
 	if (cuda_swab64(hash) > d_target) return;
 	uint32_t index = atomicInc(const_cast<uint32_t*>(g_output), SEARCH_RESULT_BUFFER_SIZE - 1) + 1;
 	g_output[index] = gid;
+
 }
 
+// executed in an iteration of function ethash_cuda_miner::search()
 void run_ethash_search(
 	uint32_t blocks,
 	uint32_t threads,
@@ -45,8 +51,20 @@ void run_ethash_search(
 	uint32_t parallelHash
 )
 {
+	//cudaProfilerStart();
+	//g_output 60162048/60162560
+	//start_nonce 574812416/575860992/576909568/577958144/579006720
+	// always 4 when CUDA
+	// CUDA INVOCATION!!!!!!!!!!!!
+	// Lots of threads!!!!!!!!!!!!
 	switch (parallelHash)
 	{
+		// <x> => _PARALLEL_HASH
+		// <<<blocks, threads, sharebytes, stream>>>
+		// blocks => number of blocks
+		// threads => the number of threads a block has
+		// sharedbytes => the size of shared memory
+		// stream => CUDA stream, executing asynchronous
 		case 1: ethash_search <1> <<<blocks, threads, sharedbytes, stream >>>(g_output, start_nonce); break;
 		case 2: ethash_search <2> <<<blocks, threads, sharedbytes, stream >>>(g_output, start_nonce); break;
 		case 3: ethash_search <3> <<<blocks, threads, sharedbytes, stream >>>(g_output, start_nonce); break;
@@ -57,7 +75,11 @@ void run_ethash_search(
 		case 8: ethash_search <8> <<<blocks, threads, sharedbytes, stream >>>(g_output, start_nonce); break;
 		default: ethash_search <4> <<<blocks, threads, sharedbytes, stream >>>(g_output, start_nonce); break;
 	}
+
+	//ethash_search <4> <<<1, 1>>>(g_output, start_nonce);
+
 	CUDA_SAFE_CALL(cudaGetLastError());
+	//cudaProfilerStop();
 }
 
 #define ETHASH_DATASET_PARENTS 256

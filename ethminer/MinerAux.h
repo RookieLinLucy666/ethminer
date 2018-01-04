@@ -526,7 +526,6 @@ public:
 				CUDAMiner::setDevices(m_cudaDevices, m_cudaDeviceCount);
 				m_miningThreads = m_cudaDeviceCount;
 			}
-
 			CUDAMiner::setNumInstances(m_miningThreads);
 			if (!CUDAMiner::configureGPU(
 				m_localWorkSize,

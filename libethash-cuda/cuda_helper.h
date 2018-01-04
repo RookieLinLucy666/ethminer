@@ -133,7 +133,7 @@ __device__ __forceinline__ uint64_t REPLACE_LOWORD(const uint64_t x, const uint3
 	return result;
 }
 
-// Endian Drehung f�r 32 Bit Typen
+// Endian Drehung f�r 32 Bit Typen
 #ifdef __CUDA_ARCH__
 __device__ __forceinline__ uint32_t cuda_swab32(const uint32_t x)
 {
@@ -460,7 +460,7 @@ __device__ __forceinline__ uint64_t devectorize(uint2 x)
 	return result;
 }
 
-
+// convert x(uint64_t) to result(uint2)
 __device__ __forceinline__ uint2 vectorize(const uint64_t x)
 {
 	uint2 result;
@@ -1038,6 +1038,7 @@ uint32_t andor32(uint32_t a, uint32_t b, uint32_t c) {
 	return result;
 }
 
+// bfe.b32 d,a,start,len; 从start开始取a的len位的数，赋值给d
 __device__ __forceinline__
 uint32_t bfe(uint32_t x, uint32_t bit, uint32_t numBits) {
 	uint32_t ret;
