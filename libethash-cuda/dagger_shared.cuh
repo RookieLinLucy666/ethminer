@@ -30,7 +30,8 @@ __device__ uint64_t compute_hash(
 	keccak_f1600_init(state);
 
 
-	// Threads work together in this phase in groups of 8.
+	// Threads work together in this phase in groups of THREADS_PER_HASH=8.
+	// Get the last 3 bit of threadIdx.x
 	const int thread_id  = threadIdx.x &  (THREADS_PER_HASH - 1);
 	const int hash_id = threadIdx.x  >> 3;
 
@@ -47,6 +48,8 @@ __device__ uint64_t compute_hash(
 
 		// uint4s => uint4[4]
 		// uint4 => {x,y,z,w (all unsigned int)}
+		// share[hash_id].uint4s[i] => uint4
+		// share[i] => 4x4x4 bytes
 		uint4 mix = share[hash_id].uint4s[thread_id & 3];
 		__syncthreads();
 
@@ -70,6 +73,7 @@ __device__ uint64_t compute_hash(
 			{
 				// ^ => binary XOR
 				if (thread_id == t) {
+					// mix -> uint4 => {x,y,z,w (all unsigned int)}
 					*share0 = fnv(init0 ^ (a + b), ((uint32_t *)&mix)[b]) % d_dag_size;
 				}
 				__syncthreads();
