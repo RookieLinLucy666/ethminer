@@ -157,6 +157,7 @@ ethash_calculate_dag_item(uint32_t start)
 #endif		 
 }
 
+// dag_size=1073739904; blocks=8192; threads=128; device=0
 void ethash_generate_dag(
 	uint64_t dag_size,
 	uint32_t blocks,
@@ -165,6 +166,9 @@ void ethash_generate_dag(
 	int device
 	)
 {
+
+	printf("dag_size=%ld; blocks=%d; threads=%d; device=%d\n", dag_size, blocks, threads, device);
+
 	uint32_t const work = (uint32_t)(dag_size / sizeof(hash64_t));
 
 	uint32_t fullRuns = work / (blocks * threads);

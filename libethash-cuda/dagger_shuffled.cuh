@@ -32,7 +32,7 @@ __device__ __forceinline__ uint64_t compute_hash(
 	}
 
 	// 0 4
-	// _PARALLEL_HASH4
+	// _PARALLEL_HASH 4
 	// THREADS_PER_HASH 8
 	for (int i = 0; i < THREADS_PER_HASH; i += _PARALLEL_HASH)
 	{

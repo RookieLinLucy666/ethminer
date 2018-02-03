@@ -15,6 +15,7 @@ typedef union {
 
 // __device__ means this function is a kernel function
 // invoked and executed by GPU
+// _PARALLEL_HASH=4 by default
 template <uint32_t _PARALLEL_HASH>
 __device__ uint64_t compute_hash(
 	uint64_t nonce
@@ -25,18 +26,20 @@ __device__ uint64_t compute_hash(
 	// u: unsigned
 	// 64: 64bits => 8bytes
 	// _t: defined by typedef
+	// 25 = 1 + 8 + 16
 	uint64_t state[25];
 	state[4] = nonce;
 	keccak_f1600_init(state);
 
 
 	// Threads work together in this phase in groups of THREADS_PER_HASH=8.
-	// Get the last 3 bit of threadIdx.x
-	const int thread_id  = threadIdx.x &  (THREADS_PER_HASH - 1);
-	const int hash_id = threadIdx.x  >> 3;
+	const int thread_id  = threadIdx.x &  (THREADS_PER_HASH - 1); // Get the last 3 bit of threadIdx.x, 8 threads in a group
+	const int hash_id = threadIdx.x  >> 3; // a hash computation contains 2^3=8 threads
+
 
 	extern __shared__  compute_hash_share share[];
 	
+	// computing each hash consumes THREADS_PER_HASH(8) threads
 	for (int i = 0; i < THREADS_PER_HASH; i++)
 	{
 		// share init with other threads
@@ -53,15 +56,17 @@ __device__ uint64_t compute_hash(
 		uint4 mix = share[hash_id].uint4s[thread_id & 3];
 		__syncthreads();
 
+		// an array with 16 integers
 		uint32_t *share0 = share[hash_id].uints;
 
-		// share init0
+		// share0[0] = mix.x, where mix(int4){x,y,z,w}
 		if (thread_id == 0)
 			*share0 = mix.x;
 		__syncthreads();
 		uint32_t init0 = *share0;
 
 		// ACCESSES 64
+		// The main iteration process(64 times)
 		for (uint32_t a = 0; a < ACCESSES; a += 4)
 		{
 			// return a[2u:5u] => a[2:5], u means unsigned, to make you never access a negative index
@@ -74,6 +79,7 @@ __device__ uint64_t compute_hash(
 				// ^ => binary XOR
 				if (thread_id == t) {
 					// mix -> uint4 => {x,y,z,w (all unsigned int)}
+					// a=xxxx00, b=0000xx, a+b==(a xor b)
 					*share0 = fnv(init0 ^ (a + b), ((uint32_t *)&mix)[b]) % d_dag_size;
 				}
 				__syncthreads();
@@ -81,12 +87,14 @@ __device__ uint64_t compute_hash(
 				// mix = map(fnv, mix, newdata) => execute fnv(mix[i], newdata[i]) elementwise
 				// d_dag is the dataset, this step is looking up the whole dataset
 				// BOTTLENECK!!!!!!!!!!
+				// uint4 mix;
 				mix = fnv4(mix, d_dag[*share0].uint4s[thread_id]);
 			}
 		}
 
 		// fnv_reduce(mix) => fnv(fnv(fnv(mix[i], mix[i+1]), mix[i+2]), mix[i+3])
 		// compress mix
+		// mix[4] is an array with length 4
 		share[hash_id].uints[thread_id] = fnv_reduce(mix);
 		__syncthreads();
 

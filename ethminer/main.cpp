@@ -1,3 +1,36 @@
+#include <thread>
+#include <fstream>
+#include <iostream>
+#include "MinerAux.h"
+#include "BuildInfo.h"
+#include <cuda_runtime.h>
+#include "libethash-cuda/ethash_cuda_miner_kernel.h"
+#include "libethash-cuda/ethash_cuda_miner_kernel_globals.h"
+#include "libethash-cuda/cuda_helper.h"
+
+using namespace std;
+using namespace dev;
+using namespace dev::eth;
+using namespace boost::algorithm;
+
+
+int main(int argc, char** argv)
+{
+	// Set env vars controlling GPU driver behavior.
+	setenv("GPU_MAX_HEAP_SIZE", "100");
+	setenv("GPU_MAX_ALLOC_PERCENT", "100");
+	setenv("GPU_SINGLE_ALLOC_PERCENT", "100");
+
+	printf("fuck you new main.cpp\n");
+
+	cudaStream_t s;
+	//cudaStreamCreate(&s);
+	//ethash_generate_dag(1073739904, 8192, 128, s, 0);
+
+	printf("and fuck you again\n");
+	return 0;
+}
+
 /*
 	This file is part of cpp-ethereum.
 
@@ -20,71 +53,71 @@
  * Ethereum client.
  */
 
-#include <thread>
-#include <fstream>
-#include <iostream>
-#include "MinerAux.h"
-#include "BuildInfo.h"
-
-using namespace std;
-using namespace dev;
-using namespace dev::eth;
-using namespace boost::algorithm;
-
-
-void help()
-{
-	cout
-		<< "Usage ethminer [OPTIONS]" << endl
-		<< "Options:" << endl << endl;
-	MinerCLI::streamHelp(cout);
-	cout
-		<< "General Options:" << endl
-		<< "    -v,--verbosity <0 - 9>  Set the log verbosity from 0 to 9 (default: 8)." << endl
-		<< "    -V,--version  Show the version and exit." << endl
-		<< "    -h,--help  Show this help message and exit." << endl
-		;
-	exit(0);
-}
-
-void version()
-{
-	cout << "ethminer version " << ETH_PROJECT_VERSION << endl;
-	cout << "Build: " << ETH_BUILD_PLATFORM << "/" << ETH_BUILD_TYPE << endl;
-	exit(0);
-}
-
-int main(int argc, char** argv)
-{
-	// Set env vars controlling GPU driver behavior.
-	setenv("GPU_MAX_HEAP_SIZE", "100");
-	setenv("GPU_MAX_ALLOC_PERCENT", "100");
-	setenv("GPU_SINGLE_ALLOC_PERCENT", "100");
-
-	MinerCLI m(MinerCLI::OperationMode::Farm);
-
-	for (int i = 1; i < argc; ++i)
-	{
-		// Mining options:
-		if (m.interpretOption(i, argc, argv))
-			continue;
-
-		// Standard options:
-		string arg = argv[i];
-		if ((arg == "-v" || arg == "--verbosity") && i + 1 < argc)
-			g_logVerbosity = atoi(argv[++i]);
-		else if (arg == "-h" || arg == "--help")
-			help();
-		else if (arg == "-V" || arg == "--version")
-			version();
-		else
-		{
-			cerr << "Invalid argument: " << arg << endl;
-			exit(-1);
-		}
-	}
-
-	m.execute();
-
-	return 0;
-}
+//#include <thread>
+//#include <fstream>
+//#include <iostream>
+//#include "MinerAux.h"
+//#include "BuildInfo.h"
+//
+//using namespace std;
+//using namespace dev;
+//using namespace dev::eth;
+//using namespace boost::algorithm;
+//
+//
+//void help()
+//{
+//	cout
+//		<< "Usage ethminer [OPTIONS]" << endl
+//		<< "Options:" << endl << endl;
+//	MinerCLI::streamHelp(cout);
+//	cout
+//		<< "General Options:" << endl
+//		<< "    -v,--verbosity <0 - 9>  Set the log verbosity from 0 to 9 (default: 8)." << endl
+//		<< "    -V,--version  Show the version and exit." << endl
+//		<< "    -h,--help  Show this help message and exit." << endl
+//		;
+//	exit(0);
+//}
+//
+//void version()
+//{
+//	cout << "ethminer version " << ETH_PROJECT_VERSION << endl;
+//	cout << "Build: " << ETH_BUILD_PLATFORM << "/" << ETH_BUILD_TYPE << endl;
+//	exit(0);
+//}
+//
+//int main(int argc, char** argv)
+//{
+//	// Set env vars controlling GPU driver behavior.
+//	setenv("GPU_MAX_HEAP_SIZE", "100");
+//	setenv("GPU_MAX_ALLOC_PERCENT", "100");
+//	setenv("GPU_SINGLE_ALLOC_PERCENT", "100");
+//
+//	MinerCLI m(MinerCLI::OperationMode::Farm);
+//
+//	for (int i = 1; i < argc; ++i)
+//	{
+//		// Mining options:
+//		if (m.interpretOption(i, argc, argv))
+//			continue;
+//
+//		// Standard options:
+//		string arg = argv[i];
+//		if ((arg == "-v" || arg == "--verbosity") && i + 1 < argc)
+//			g_logVerbosity = atoi(argv[++i]);
+//		else if (arg == "-h" || arg == "--help")
+//			help();
+//		else if (arg == "-V" || arg == "--version")
+//			version();
+//		else
+//		{
+//			cerr << "Invalid argument: " << arg << endl;
+//			exit(-1);
+//		}
+//	}
+//
+//	m.execute();
+//
+//	return 0;
+//}
