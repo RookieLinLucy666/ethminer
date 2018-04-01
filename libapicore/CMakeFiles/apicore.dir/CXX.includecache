@@ -17605,6 +17605,8 @@ libethcore/Miner.h
 -
 libethcore/BlockHeader.h
 -
+cuda_profiler_api.h
+libethcore/cuda_profiler_api.h
 
 libethcore/Miner.h
 thread

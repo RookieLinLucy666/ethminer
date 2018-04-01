@@ -18,12 +18,14 @@
 #include "dagger_shared.cuh"
 #else
 #include "keccak.cuh"
-#include "dagger_shuffled.cuh"
+//#include "dagger_shuffled.cuh"
+#include "dagger_shuffled_optimized.cuh"
 #endif
-
+//
 
 // __global__ means this function is a kernel function
 // invoked by CPU, executed by GPU
+// massively parallel...
 template <uint32_t _PARALLEL_HASH>
 __global__ void 
 ethash_search(
@@ -51,12 +53,17 @@ void run_ethash_search(
 	uint32_t parallelHash
 )
 {
+	//printf("parallelHash -> %d\n", parallelHash);
 	//cudaProfilerStart();
 	//g_output 60162048/60162560
 	//start_nonce 574812416/575860992/576909568/577958144/579006720
-	// always 4 when CUDA
+	// parallelHash -> 8
 	// CUDA INVOCATION!!!!!!!!!!!!
 	// Lots of threads!!!!!!!!!!!!
+
+//	blocks = 1;
+//	threads = 1;
+
 	switch (parallelHash)
 	{
 		// <x> => _PARALLEL_HASH
@@ -76,11 +83,25 @@ void run_ethash_search(
 		default: ethash_search <4> <<<blocks, threads, sharedbytes, stream >>>(g_output, start_nonce); break;
 	}
 
-	//ethash_search <4> <<<1, 1>>>(g_output, start_nonce);
-
 	CUDA_SAFE_CALL(cudaGetLastError());
 	//cudaProfilerStop();
 }
+
+__global__ void
+ethash_test(uint64_t nonce, uint64_t res)
+{
+	uint64_t real_res = compute_hash<8>(nonce);
+	//printf("fuck\n");
+	printf("%s\n", real_res==res?"true":"false");
+}
+
+void run_ethash_test(uint64_t nonce, uint64_t res) {
+	ethash_test<<<1, 1>>>(nonce, res);
+	CUDA_SAFE_CALL(cudaDeviceSynchronize());
+	cudaError err = cudaGetLastError(); // 77
+	//printf("%d\n", err);
+}
+
 
 #define ETHASH_DATASET_PARENTS 256
 #define NODE_WORDS (64/4)

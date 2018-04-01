@@ -1808,6 +1808,7 @@ libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash_cuda_miner.cpp.o: /usr/local/cu
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash_cuda_miner.cpp.o: /usr/local/cuda-9.0/include/crt/sm_70_rt.h
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash_cuda_miner.cpp.o: /usr/local/cuda-9.0/include/crt/sm_70_rt.hpp
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash_cuda_miner.cpp.o: /usr/local/cuda-9.0/include/cuda_device_runtime_api.h
+libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash_cuda_miner.cpp.o: /usr/local/cuda-9.0/include/cuda_profiler_api.h
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash_cuda_miner.cpp.o: /usr/local/cuda-9.0/include/cuda_runtime.h
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash_cuda_miner.cpp.o: /usr/local/cuda-9.0/include/cuda_runtime_api.h
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash_cuda_miner.cpp.o: /usr/local/cuda-9.0/include/cuda_surface_types.h

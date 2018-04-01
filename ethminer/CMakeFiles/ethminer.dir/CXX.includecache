@@ -612,6 +612,10 @@ locale
 
 /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/algorithm/string/yes_no_type.hpp
 
+/home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/aligned_storage.hpp
+boost/type_traits/aligned_storage.hpp
+-
+
 /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/array.hpp
 boost/detail/workaround.hpp
 -
@@ -8579,6 +8583,64 @@ boost/assert.hpp
 /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/exception_ptr.hpp
 boost/exception/detail/exception_ptr.hpp
 -
+
+/home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/foreach.hpp
+cstddef
+-
+utility
+-
+boost/config.hpp
+-
+boost/detail/workaround.hpp
+-
+boost/mpl/if.hpp
+-
+boost/mpl/assert.hpp
+-
+boost/mpl/logical.hpp
+-
+boost/mpl/eval_if.hpp
+-
+boost/noncopyable.hpp
+-
+boost/range/end.hpp
+-
+boost/range/begin.hpp
+-
+boost/range/rend.hpp
+-
+boost/range/rbegin.hpp
+-
+boost/range/iterator.hpp
+-
+boost/range/reverse_iterator.hpp
+-
+boost/type_traits/is_array.hpp
+-
+boost/type_traits/is_const.hpp
+-
+boost/type_traits/is_abstract.hpp
+-
+boost/type_traits/is_base_and_derived.hpp
+-
+boost/type_traits/is_rvalue_reference.hpp
+-
+boost/iterator/iterator_traits.hpp
+-
+boost/utility/addressof.hpp
+-
+boost/foreach_fwd.hpp
+-
+new
+-
+boost/aligned_storage.hpp
+-
+boost/utility/enable_if.hpp
+-
+boost/type_traits/remove_const.hpp
+-
+
+/home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/foreach_fwd.hpp
 
 /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/function.hpp
 functional
@@ -17146,6 +17208,22 @@ boost/type_traits/is_reference.hpp
 boost/config.hpp
 -
 
+/home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/aligned_storage.hpp
+cstddef
+-
+boost/config.hpp
+-
+boost/detail/workaround.hpp
+-
+boost/type_traits/alignment_of.hpp
+-
+boost/type_traits/type_with_alignment.hpp
+-
+boost/type_traits/is_pod.hpp
+-
+boost/type_traits/conditional.hpp
+-
+
 /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/alignment_of.hpp
 boost/config.hpp
 -
@@ -18470,8 +18548,6 @@ cpptl/smallmap.h
 cpptl/forwards.h
 -
 
-/home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/json/version.h
-
 /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/json/writer.h
 value.h
 /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/json/value.h
@@ -18619,6 +18695,8 @@ jsonrpccpp/client.h
 /home/elvis/ElvisProjs/ethminer/ethminer/MinerAux.h
 thread
 -
+unistd.h
+-
 chrono
 -
 fstream
@@ -18633,7 +18711,13 @@ boost/algorithm/string.hpp
 -
 boost/algorithm/string/trim_all.hpp
 -
+boost/algorithm/string/classification.hpp
+-
+boost/algorithm/string/split.hpp
+-
 boost/optional.hpp
+-
+boost/foreach.hpp
 -
 libethcore/Exceptions.h
 -
@@ -18647,6 +18731,10 @@ libethash-cl/CLMiner.h
 -
 libethash-cuda/CUDAMiner.h
 -
+libethash-cuda/ethash_cuda_miner_kernel.h
+-
+libethash-cuda/ethash_cuda_miner.h
+-
 jsonrpccpp/client/connectors/httpclient.h
 -
 FarmClient.h
@@ -18659,6 +18747,8 @@ DBusInt.h
 /home/elvis/ElvisProjs/ethminer/ethminer/DBusInt.h
 libapicore/Api.h
 -
+cuda_profiler_api.h
+/home/elvis/ElvisProjs/ethminer/ethminer/cuda_profiler_api.h
 
 /home/elvis/ElvisProjs/ethminer/ethminer/main.cpp
 thread
@@ -18671,14 +18761,10 @@ MinerAux.h
 /home/elvis/ElvisProjs/ethminer/ethminer/MinerAux.h
 BuildInfo.h
 /home/elvis/ElvisProjs/ethminer/ethminer/BuildInfo.h
-cuda_runtime.h
+cuda_profiler_api.h
+/home/elvis/ElvisProjs/ethminer/ethminer/cuda_profiler_api.h
+numeric
 -
-libethash-cuda/ethash_cuda_miner_kernel.h
-/home/elvis/ElvisProjs/ethminer/ethminer/libethash-cuda/ethash_cuda_miner_kernel.h
-libethash-cuda/ethash_cuda_miner_kernel_globals.h
-/home/elvis/ElvisProjs/ethminer/ethminer/libethash-cuda/ethash_cuda_miner_kernel_globals.h
-libethash-cuda/cuda_helper.h
-/home/elvis/ElvisProjs/ethminer/ethminer/libethash-cuda/cuda_helper.h
 
 /usr/local/cuda-9.0/include/builtin_types.h
 device_types.h
@@ -18860,17 +18946,15 @@ device_types.h
 host_defines.h
 /usr/local/cuda-9.0/include/crt/host_defines.h
 
-/usr/local/cuda-9.0/include/cuda.h
-stdlib.h
--
-stdint.h
--
-
 /usr/local/cuda-9.0/include/cuda_device_runtime_api.h
 driver_types.h
 /usr/local/cuda-9.0/include/driver_types.h
 host_defines.h
 /usr/local/cuda-9.0/include/host_defines.h
+
+/usr/local/cuda-9.0/include/cuda_profiler_api.h
+driver_types.h
+/usr/local/cuda-9.0/include/driver_types.h
 
 /usr/local/cuda-9.0/include/cuda_runtime.h
 host_config.h
@@ -19434,18 +19518,6 @@ libethcore/Miner.h
 ethash_cuda_miner.h
 ethminer/../libethash-cuda/ethash_cuda_miner.h
 
-ethminer/../libethash-cuda/cuda_helper.h
-cuda.h
--
-cuda_runtime.h
--
-device_functions.h
--
-device_launch_parameters.h
--
-stdint.h
--
-
 ethminer/../libethash-cuda/ethash_cuda_miner.h
 time.h
 -
@@ -19467,8 +19539,6 @@ stdint.h
 -
 cuda_runtime.h
 -
-
-ethminer/../libethash-cuda/ethash_cuda_miner_kernel_globals.h
 
 ethminer/../libethash/compiler.h
 
@@ -19529,6 +19599,8 @@ libethcore/Miner.h
 -
 libethcore/BlockHeader.h
 -
+cuda_profiler_api.h
+ethminer/../libethcore/cuda_profiler_api.h
 
 ethminer/../libethcore/Miner.h
 thread

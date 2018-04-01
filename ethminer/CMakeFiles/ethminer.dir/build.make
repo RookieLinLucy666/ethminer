@@ -122,6 +122,47 @@ ethminer/CMakeFiles/ethminer.dir/build: ethminer/ethminer
 
 .PHONY : ethminer/CMakeFiles/ethminer.dir/build
 
+# Object files for target ethminer
+ethminer_OBJECTS = \
+"CMakeFiles/ethminer.dir/main.cpp.o"
+
+# External object files for target ethminer
+ethminer_EXTERNAL_OBJECTS =
+
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: ethminer/CMakeFiles/ethminer.dir/main.cpp.o
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: ethminer/CMakeFiles/ethminer.dir/build.make
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libethcore/libethcore.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libethash/libethash.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libdevcore/libdevcore.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/lib/libjsonrpccpp-client.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libapicore/libapicore.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libstratum/libethstratum.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libethash-cl/libethash-cl.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libethash-cuda/libethash-cuda.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libethcore/libethcore.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libethash-cl/libethash-cl.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libethash-cuda/libethash-cuda.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/lib/libOpenCL.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libethash/libethash.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libhwmon/libhwmon.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /usr/local/cuda-9.0/lib64/libcudart_static.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /usr/lib/x86_64-linux-gnu/librt.so
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/lib/libcurl.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/lib/libz.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/lib/libjsonrpccpp-server.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/lib/libjsonrpccpp-common.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: libdevcore/libdevcore.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/lib/libboost_system-mt.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/lib/libjsoncpp.a
+ethminer/CMakeFiles/CMakeRelink.dir/ethminer: ethminer/CMakeFiles/ethminer.dir/relink.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/elvis/ElvisProjs/ethminer/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable CMakeFiles/CMakeRelink.dir/ethminer"
+	cd /home/elvis/ElvisProjs/ethminer/ethminer && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ethminer.dir/relink.txt --verbose=$(VERBOSE)
+
+# Rule to relink during preinstall.
+ethminer/CMakeFiles/ethminer.dir/preinstall: ethminer/CMakeFiles/CMakeRelink.dir/ethminer
+
+.PHONY : ethminer/CMakeFiles/ethminer.dir/preinstall
+
 ethminer/CMakeFiles/ethminer.dir/requires: ethminer/CMakeFiles/ethminer.dir/main.cpp.o.requires
 
 .PHONY : ethminer/CMakeFiles/ethminer.dir/requires

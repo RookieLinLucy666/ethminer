@@ -30,6 +30,7 @@
 #include <libdevcore/Worker.h>
 #include <libethcore/Miner.h>
 #include <libethcore/BlockHeader.h>
+#include "cuda_profiler_api.h"
 
 using namespace boost::asio;
 
@@ -108,10 +109,12 @@ public:
 		for (unsigned i = start; i < ins; ++i)
 		{
 			// TODO: Improve miners creation, use unique_ptr.
+			// push_back => add an element on the buttom of the vector
 			m_miners.push_back(std::shared_ptr<Miner>(m_sealers[_sealer].create(*this, i)));
 
 			// Start miners' threads. They should pause waiting for new work
 			// package.
+			// back => return the last element of the vector
 			m_miners.back()->startWorking();
 		}
 		m_isMining = true;
@@ -148,6 +151,8 @@ public:
 		m_io_service.stop();
 		m_serviceThread.join();
 		p_hashrateTimer = nullptr;
+
+		cudaProfilerStop();
 	}
 
 	void collectHashRate()

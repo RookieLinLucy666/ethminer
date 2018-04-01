@@ -49,6 +49,7 @@ ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/algorithm/string/trim.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/algorithm/string/trim_all.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/algorithm/string/yes_no_type.hpp
+ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/aligned_storage.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/array.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/asio.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/asio/async_result.hpp
@@ -625,6 +626,8 @@ ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/exception/to_string.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/exception/to_string_stub.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/exception_ptr.hpp
+ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/foreach.hpp
+ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/foreach_fwd.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/function.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/function/detail/maybe_include.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/function/detail/prologue.hpp
@@ -1404,6 +1407,7 @@ ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/add_reference.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/add_rvalue_reference.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/add_volatile.hpp
+ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/aligned_storage.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/alignment_of.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/common_type.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/boost/type_traits/composite_traits.hpp
@@ -1521,7 +1525,6 @@ ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/json/json.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/json/reader.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/json/value.h
-ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/json/version.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/json/writer.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/jsonrpccpp/client.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /home/elvis/.hunter/_Base/aafb99b/0452b62/a63b4ed/Install/include/jsonrpccpp/client/batchcall.h
@@ -1560,8 +1563,8 @@ ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/crt/mat
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/crt/math_functions.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/crt/sm_70_rt.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/crt/sm_70_rt.hpp
-ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/cuda.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/cuda_device_runtime_api.h
+ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/cuda_profiler_api.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/cuda_runtime.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/cuda_runtime_api.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: /usr/local/cuda-9.0/include/cuda_surface_types.h
@@ -1619,10 +1622,8 @@ ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libdevcore/vector_ref.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash-cl/CL/cl2.hpp
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash-cl/CLMiner.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash-cuda/CUDAMiner.h
-ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash-cuda/cuda_helper.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash-cuda/ethash_cuda_miner.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash-cuda/ethash_cuda_miner_kernel.h
-ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash-cuda/ethash_cuda_miner_kernel_globals.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash/compiler.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethash/ethash.h
 ethminer/CMakeFiles/ethminer.dir/main.cpp.o: ethminer/../libethcore/BlockHeader.h

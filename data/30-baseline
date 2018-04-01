@@ -1,0 +1,53 @@
+dag_size=1073739904; blocks=8192; threads=128; device=0
+CUDA#0: 0%
+CUDA#0: 6%
+CUDA#0: 12%
+CUDA#0: 19%
+CUDA#0: 25%
+CUDA#0: 31%
+CUDA#0: 38%
+CUDA#0: 44%
+CUDA#0: 50%
+CUDA#0: 56%
+CUDA#0: 62%
+CUDA#0: 69%
+CUDA#0: 75%
+CUDA#0: 81%
+CUDA#0: 88%
+CUDA#0: 94%
+  ℹ  15:36:05|CUDA0     init() finished
+  ℹ  15:36:05|CUDA0     search()
+Trial 1... 7342969
+Trial 2... 7737116
+Trial 3... 8497714
+Trial 4... 8392804
+Trial 5... 8392804
+Trial 6... 8392804
+Trial 7... 8392804
+Trial 8... 8392804
+Trial 9... 8393644
+Trial 10... 8392804
+Trial 11... 8392804
+Trial 12... 8393644
+Trial 13... 8393644
+Trial 14... 8393644
+Trial 15... 8394484
+Trial 16... 8394484
+Trial 17... 8288723
+Trial 18... 8289553
+Trial 19... 8289553
+Trial 20... 8392804
+Trial 21... 8392804
+Trial 22... 8287065
+Trial 23... 8288723
+Trial 24... 8287894
+Trial 25... 8393644
+Trial 26... 8287894
+Trial 27... 8287894
+Trial 28... 8287894
+Trial 29... 8392804
+Trial 30... 8392804
+max: 8497714
+min: 7342969
+avg: 8308367
+std: 218129

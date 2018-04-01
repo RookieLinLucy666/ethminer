@@ -37,6 +37,7 @@
 #include <cuda_runtime.h>
 #include "ethash_cuda_miner.h"
 #include "ethash_cuda_miner_kernel_globals.h"
+#include "cuda_profiler_api.h"
 
 // workaround lame platforms
 
@@ -55,10 +56,10 @@ struct CUDAChannel: public LogChannel
 #define cudalog clog(CUDAChannel)
 #define ETHCUDA_LOG(_contents) cudalog << _contents
 
-
+// gotcha!
 unsigned const ethash_cuda_miner::c_defaultBlockSize = 128;
 unsigned const ethash_cuda_miner::c_defaultGridSize = 8192; // * CL_DEFAULT_LOCAL_WORK_SIZE
-unsigned const ethash_cuda_miner::c_defaultNumStreams = 2;
+unsigned const ethash_cuda_miner::c_defaultNumStreams = 1;
 
 ethash_cuda_miner::search_hook::~search_hook() {}
 
@@ -167,7 +168,8 @@ void ethash_cuda_miner::setParallelHash(unsigned _parallelHash)
   m_parallelHash = _parallelHash;
 }
 
-unsigned ethash_cuda_miner::m_parallelHash = 4;
+// init here
+unsigned ethash_cuda_miner::m_parallelHash = 8;
 unsigned ethash_cuda_miner::s_blockSize = ethash_cuda_miner::c_defaultBlockSize;
 unsigned ethash_cuda_miner::s_gridSize = ethash_cuda_miner::c_defaultGridSize;
 unsigned ethash_cuda_miner::s_numStreams = ethash_cuda_miner::c_defaultNumStreams;
@@ -336,7 +338,6 @@ void ethash_cuda_miner::search(uint8_t const* header, uint64_t target, search_ho
 	}
 	uint64_t batch_size = s_gridSize * s_blockSize;
 
-	// normally 22 times
 	for (; !exit; m_current_index++, m_current_nonce += batch_size)
 	{
 		auto stream_index = m_current_index % s_numStreams;
@@ -354,8 +355,6 @@ void ethash_cuda_miner::search(uint8_t const* header, uint64_t target, search_ho
 			for (unsigned int j = 0; j < found_count; j++)
 				nonces[j] = nonce_base + buffer[j + 1];
 		}
-
-		// buffer => g_output
 		run_ethash_search(s_gridSize, s_blockSize, m_sharedBytes, stream, buffer, m_current_nonce, m_parallelHash);
 		if (m_current_index >= s_numStreams)
 		{
@@ -363,6 +362,7 @@ void ethash_cuda_miner::search(uint8_t const* header, uint64_t target, search_ho
 			exit |= hook.searched(nonce_base, batch_size);
 		}
 	}
+
 }
 
 dev::eth::HwMonitor ethash_cuda_miner::hwmon()

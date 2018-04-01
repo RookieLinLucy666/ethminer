@@ -9049,6 +9049,8 @@ ethash_cuda_miner.h
 /home/elvis/ElvisProjs/ethminer/libethash-cuda/ethash_cuda_miner.h
 ethash_cuda_miner_kernel_globals.h
 /home/elvis/ElvisProjs/ethminer/libethash-cuda/ethash_cuda_miner_kernel_globals.h
+cuda_profiler_api.h
+/home/elvis/ElvisProjs/ethminer/libethash-cuda/cuda_profiler_api.h
 
 /home/elvis/ElvisProjs/ethminer/libethash-cuda/ethash_cuda_miner.h
 time.h
@@ -9259,6 +9261,10 @@ driver_types.h
 /usr/local/cuda-9.0/include/driver_types.h
 host_defines.h
 /usr/local/cuda-9.0/include/host_defines.h
+
+/usr/local/cuda-9.0/include/cuda_profiler_api.h
+driver_types.h
+/usr/local/cuda-9.0/include/driver_types.h
 
 /usr/local/cuda-9.0/include/cuda_runtime.h
 host_config.h

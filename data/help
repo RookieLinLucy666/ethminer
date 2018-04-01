@@ -1,0 +1,3 @@
+    --benchmark-warmup <seconds>  Set the duration of warmup for the benchmark tests (default: 3).
+    --benchmark-trial <seconds>  Set the duration for each trial for the benchmark tests (default: 3).
+    -Z [<n>],--simulation [<n>] Mining test mode. Used to validate kernel optimizations. Optionally specify block number.

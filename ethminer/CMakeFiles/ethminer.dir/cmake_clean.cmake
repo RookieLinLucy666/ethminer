@@ -2,6 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ethminer.dir/main.cpp.o"
   "ethminer.pdb"
   "ethminer"
+  "ethminer.pdb"
+  "CMakeFiles/CMakeRelink.dir/ethminer"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -70,7 +70,7 @@ set(generated_file_internal "/home/elvis/ElvisProjs/ethminer/libethash-cuda/CMak
 set(generated_cubin_file_internal "/home/elvis/ElvisProjs/ethminer/libethash-cuda/CMakeFiles/ethash-cuda.dir//./ethash-cuda_generated_ethash_cuda_miner_kernel.cu.o.cubin.txt") # path
 
 set(CUDA_NVCC_EXECUTABLE "/usr/local/cuda-9.0/bin/nvcc") # path
-set(CUDA_NVCC_FLAGS --disable-warnings;--ptxas-options=-v;-use_fast_math;-lineinfo;-gencode arch=compute_30,code=sm_30;-gencode arch=compute_35,code=sm_35;-gencode arch=compute_50,code=sm_50;-gencode arch=compute_52,code=sm_52;-gencode arch=compute_53,code=sm_53;-gencode arch=compute_60,code=sm_60;-gencode arch=compute_61,code=sm_61;-gencode arch=compute_62,code=sm_62;-gencode arch=compute_70,code=sm_70 ;; ) # list
+set(CUDA_NVCC_FLAGS --disable-warnings;--ptxas-options=-v;-use_fast_math;-lineinfo;-gencode arch=compute_50,code=sm_50 ;; ) # list
 # Build specific configuration flags
 set(CUDA_NVCC_FLAGS_RELEASE -O3 ; )
 set(CUDA_NVCC_FLAGS_RELWITHDEBINFO  ; )

@@ -6,6 +6,7 @@
 // HASH_BYTES = 64
 // The size of compute_hash_share is exactly the HASH_BYTES
 // 64bytes
+// shared among threads
 typedef union {
 	uint4	 uint4s[4]; // 4x4x4
 	uint64_t ulongs[8]; // 8x8
@@ -15,6 +16,7 @@ typedef union {
 
 // __device__ means this function is a kernel function
 // invoked and executed by GPU
+// usually invoked by a __global__ function(the bridge between cpu and gpu)
 // _PARALLEL_HASH=4 by default
 template <uint32_t _PARALLEL_HASH>
 __device__ uint64_t compute_hash(
@@ -27,16 +29,20 @@ __device__ uint64_t compute_hash(
 	// 64: 64bits => 8bytes
 	// _t: defined by typedef
 	// 25 = 1 + 8 + 16
+	// 128 = 16x8 => the state size
 	uint64_t state[25];
 	state[4] = nonce;
 	keccak_f1600_init(state);
 
 
 	// Threads work together in this phase in groups of THREADS_PER_HASH=8.
-	const int thread_id  = threadIdx.x &  (THREADS_PER_HASH - 1); // Get the last 3 bit of threadIdx.x, 8 threads in a group
+	// xxxxxxxx111
+	// thread_id = 111, hash_id = xxxxxxxx
+	// Get the last 3 bit of threadIdx.x, 8 threads in a group
+	const int thread_id  = threadIdx.x &  (THREADS_PER_HASH - 1);
 	const int hash_id = threadIdx.x  >> 3; // a hash computation contains 2^3=8 threads
 
-
+	// __shared__: all threads in the same block can access the variable
 	extern __shared__  compute_hash_share share[];
 	
 	// computing each hash consumes THREADS_PER_HASH(8) threads
@@ -53,7 +59,7 @@ __device__ uint64_t compute_hash(
 		// uint4 => {x,y,z,w (all unsigned int)}
 		// share[hash_id].uint4s[i] => uint4
 		// share[i] => 4x4x4 bytes
-		uint4 mix = share[hash_id].uint4s[thread_id & 3];
+		uint4 mix = share[hash_id].uint4s[thread_id & 3]; // thread_id & 3 => the last two bits of thread_id
 		__syncthreads();
 
 		// an array with 16 integers

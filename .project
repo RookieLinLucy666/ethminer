@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>ethminer-Release@ethminer</name>
+	<name>ethminer-debug@ethminer</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -452,6 +452,11 @@
 			<name>[Targets]/[lib] ethash-cuda//ethash_cuda_miner_kernel.cu</name>
 			<type>1</type>
 			<location>/home/elvis/ElvisProjs/ethminer/libethash-cuda/ethash_cuda_miner_kernel.cu</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] ethash-cuda//dagger_shuffled_optimized.cuh</name>
+			<type>1</type>
+			<location>/home/elvis/ElvisProjs/ethminer/libethash-cuda/dagger_shuffled_optimized.cuh</location>
 		</link>
 		<link>
 			<name>[Targets]/[lib] ethash-cuda//keccak.cuh</name>

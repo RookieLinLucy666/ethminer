@@ -23,6 +23,7 @@
  */
 
 #include <thread>
+#include <unistd.h>
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -31,7 +32,10 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/trim_all.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
 #include <boost/optional.hpp>
+#include <boost/foreach.hpp>
 
 #include <libethcore/Exceptions.h>
 #include <libdevcore/SHA3.h>
@@ -42,6 +46,8 @@
 #endif
 #if ETH_ETHASHCUDA
 #include <libethash-cuda/CUDAMiner.h>
+#include <libethash-cuda/ethash_cuda_miner_kernel.h>
+#include <libethash-cuda/ethash_cuda_miner.h>
 #endif
 #include <jsonrpccpp/client/connectors/httpclient.h>
 #include "FarmClient.h"
@@ -55,6 +61,9 @@
 #if API_CORE
 #include <libapicore/Api.h>
 #endif
+
+#include "cuda_profiler_api.h"
+
 
 using namespace std;
 using namespace dev;
@@ -88,7 +97,8 @@ public:
 		Benchmark,
 		Simulation,
 		Farm,
-		Stratum
+		Stratum,
+		Test
 	};
 
 	MinerCLI(OperationMode _mode = OperationMode::None): mode(_mode) {}
@@ -333,21 +343,21 @@ public:
 				}
 			}
 		}
-                else if (arg == "--cuda-parallel-hash" && i + 1 < argc)
-                {
-                        try {
-                                m_parallelHash = stol(argv[++i]);
-                                if (m_parallelHash == 0 || m_parallelHash > 8)
-                                {
-                                    throw BadArgument();
-                                }
-                        }
-                        catch (...)
-                        {
-                                cerr << "Bad " << arg << " option: " << argv[i] << endl;
-                                BOOST_THROW_EXCEPTION(BadArgument());
-                        }
-                }
+		else if (arg == "--cuda-parallel-hash" && i + 1 < argc)
+		{
+				try {
+						m_parallelHash = stol(argv[++i]);
+						if (m_parallelHash == 0 || m_parallelHash > 8)
+						{
+							throw BadArgument();
+						}
+				}
+				catch (...)
+				{
+						cerr << "Bad " << arg << " option: " << argv[i] << endl;
+						BOOST_THROW_EXCEPTION(BadArgument());
+				}
+		}
 		else if (arg == "--cuda-schedule" && i + 1 < argc)
 		{
 			string mode = argv[++i];
@@ -461,6 +471,10 @@ public:
 				}
 			}
 		}
+		else if (arg == "-Z" || arg == "--test") {
+			mode = OperationMode::Test;
+
+		}
 		else if ((arg == "-t" || arg == "--mining-threads") && i + 1 < argc)
 		{
 			try
@@ -544,12 +558,14 @@ public:
 			exit(1);
 #endif
 		}
-		if (mode == OperationMode::Benchmark)
+		if (mode == OperationMode::Benchmark){
 			doBenchmark(m_minerType, m_benchmarkWarmup, m_benchmarkTrial, m_benchmarkTrials);
-		else if (mode == OperationMode::Farm)
+		} else if (mode == OperationMode::Farm)
 			doFarm(m_minerType, m_activeFarmURL, m_farmRecheckPeriod);
 		else if (mode == OperationMode::Simulation)
 			doSimulation(m_minerType);
+		else if (mode == OperationMode::Test)
+			doTest();
 #if ETH_STRATUM
 		else if (mode == OperationMode::Stratum)
 			doStratum();
@@ -625,14 +641,72 @@ public:
 
 private:
 
-	void doBenchmark(MinerType _m, unsigned _warmupDuration = 15, unsigned _trialDuration = 3, unsigned _trials = 5)
-	{
+	void doTest() {
+		cout << "Test Mode!!!" << endl;
+
+//		char buf[100];
+//		getcwd(buf, 100);
+//		cout << buf << endl; // in /
+
 		BlockHeader genesis;
-		genesis.setNumber(m_benchmarkBlock);
+		genesis.setNumber(0); // 0
 		genesis.setDifficulty(1 << 18);
 		cdebug << genesis.boundary();
 
-		Farm f;
+		Farm f; // Farm runs on another thread
+		map<string, Farm::SealerDescriptor> sealers;
+#if ETH_ETHASHCL
+		sealers["opencl"] = Farm::SealerDescriptor{&CLMiner::instances, [](FarmFace& _farm, unsigned _index){ return new CLMiner(_farm, _index); }};
+#endif
+#if ETH_ETHASHCUDA
+		sealers["cuda"] = Farm::SealerDescriptor{ &CUDAMiner::instances, [](FarmFace& _farm, unsigned _index){ return new CUDAMiner(_farm, _index); } };
+#endif
+		f.setSealers(sealers);
+		f.onSolutionFound([&](Solution) { return false; });
+
+		string platformInfo = "CUDA";
+		cout << "Benchmarking on platform: " << platformInfo << endl;
+
+		cout << "Preparing DAG for block #" << m_benchmarkBlock << endl;
+		//genesis.prep();
+
+		genesis.setDifficulty(u256(1) << 63);
+		f.start("cuda", false);
+		f.setWork(WorkPackage{genesis});
+		this_thread::sleep_for(chrono::seconds(15));
+
+
+		ifstream testsetFile;
+		testsetFile.open("data/testset");
+		string nonce_str;
+		string res_str;
+		char *endptr;
+		while(!testsetFile.eof()) {
+			testsetFile >> nonce_str >> res_str;
+			uint64_t nonce = strtoul(nonce_str.c_str(), &endptr, 10);
+			uint64_t res = strtoul(res_str.c_str(), &endptr, 10);
+
+			run_ethash_test(nonce, res);
+			//cout << nonce << " " << res << endl;
+		}
+		testsetFile.close();
+
+	}
+
+	void doBenchmark(MinerType _m, unsigned _warmupDuration = 15, unsigned _trialDuration = 3, unsigned _trials = 30)
+	{
+
+		BlockHeader genesis;
+		genesis.setNumber(m_benchmarkBlock); // 0
+		genesis.setDifficulty(1 << 18);
+		cdebug << genesis.boundary();
+
+		printf("Parallel Hash: %d\n", m_parallelHash);
+		printf("Warmup duration: %d\n", _warmupDuration);
+		printf("Trial duration: %d\n", _trialDuration);
+		printf("Trials: %d\n", _trials);
+
+		Farm f; // Farm runs on another thread
 		map<string, Farm::SealerDescriptor> sealers;
 #if ETH_ETHASHCL
 		sealers["opencl"] = Farm::SealerDescriptor{&CLMiner::instances, [](FarmFace& _farm, unsigned _index){ return new CLMiner(_farm, _index); }};
@@ -656,10 +730,10 @@ private:
 			f.start("cuda", false);
 		f.setWork(WorkPackage{genesis});
 
-		map<uint64_t, WorkingProgress> results;
-		uint64_t mean = 0;
-		uint64_t innerMean = 0;
-		for (unsigned i = 0; i <= _trials; ++i)
+		list<uint64_t> results;
+		//uint64_t mean = 0;
+		//uint64_t innerMean = 0;
+		for (unsigned i = 0; i <= _trials; ++i) // _trials = 5
 		{
 			if (!i)
 				cout << "Warming up..." << endl;
@@ -670,20 +744,34 @@ private:
 			auto mp = f.miningProgress();
 			if (!i)
 				continue;
-			auto rate = mp.rate();
+			uint64_t rate = mp.rate();
 
 			cout << rate << endl;
-			results[rate] = mp;
-			mean += rate;
+			results.push_back(rate);
+			//mean += rate;
 		}
 		f.stop();
-		int j = -1;
-		for (auto const& r: results)
-			if (++j > 0 && j < (int)_trials - 1)
-				innerMean += r.second.rate();
-		innerMean /= (_trials - 2);
-		cout << "min/mean/max: " << results.begin()->second.rate() << "/" << (mean / _trials) << "/" << results.rbegin()->second.rate() << " H/s" << endl;
-		cout << "inner mean: " << innerMean << " H/s" << endl;
+
+		uint64_t avg = 0, max = 0, min = 9999999999;
+		double stdd;
+
+		for(list<uint64_t>::iterator it=results.begin();it!=results.end();++it) {
+			avg += *it;
+			if(*it < min) min = *it;
+			if(*it > max) max = *it;
+		}
+		avg /= results.size();
+		for(list<uint64_t>::iterator it=results.begin();it!=results.end();++it) {
+			stdd += (*it-avg) * (*it - avg);
+		}
+		stdd = sqrt(stdd/results.size());
+
+		//cout << "min/mean/max: " << results.begin() << "/" << mean << "/" << results.rbegin() << " H/s" << endl;
+		cout << "max: " << max << endl;
+		cout << "min: " << min << endl;
+		cout << "avg: " << avg << endl;
+		cout << "std: " << stdd << endl;
+		//cout << "std: " << innerMean <<  << endl;
 
 		exit(0);
 	}
@@ -1072,7 +1160,7 @@ private:
 	unsigned m_dagCreateDevice = 0;
 	/// Benchmarking params
 	unsigned m_benchmarkWarmup = 15;
-	unsigned m_parallelHash    = 4;
+	unsigned m_parallelHash    = 8;
 	unsigned m_benchmarkTrial = 3;
 	unsigned m_benchmarkTrials = 5;
 	unsigned m_benchmarkBlock = 0;

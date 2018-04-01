@@ -2,7 +2,7 @@
 SET(CUDA_NVCC_DEPEND
   "/home/elvis/ElvisProjs/ethminer/libethash-cuda/cuda_helper.h"
  "/home/elvis/ElvisProjs/ethminer/libethash-cuda/dagger_shared.cuh"
- "/home/elvis/ElvisProjs/ethminer/libethash-cuda/dagger_shuffled.cuh"
+ "/home/elvis/ElvisProjs/ethminer/libethash-cuda/dagger_shuffled_optimized.cuh"
  "/home/elvis/ElvisProjs/ethminer/libethash-cuda/ethash_cuda_miner_kernel.cu"
  "/home/elvis/ElvisProjs/ethminer/libethash-cuda/ethash_cuda_miner_kernel.h"
  "/home/elvis/ElvisProjs/ethminer/libethash-cuda/ethash_cuda_miner_kernel_globals.h"
@@ -21,6 +21,7 @@ SET(CUDA_NVCC_DEPEND
  "/usr/include/c++/5/new"
  "/usr/include/endian.h"
  "/usr/include/features.h"
+ "/usr/include/inttypes.h"
  "/usr/include/libio.h"
  "/usr/include/limits.h"
  "/usr/include/linux/limits.h"

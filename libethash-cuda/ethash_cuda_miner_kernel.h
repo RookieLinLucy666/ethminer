@@ -7,7 +7,7 @@
 
 #define SEARCH_RESULT_BUFFER_SIZE 64
 #define ACCESSES 64
-#define THREADS_PER_HASH (128 / 16)
+#define THREADS_PER_HASH (128 / 16) // 8
 
 typedef struct
 {
@@ -44,6 +44,11 @@ void set_header(
 
 void set_target(
 	uint64_t _target
+	);
+
+void run_ethash_test(
+	uint64_t nonce,
+	uint64_t res
 	);
 
 void run_ethash_search(
