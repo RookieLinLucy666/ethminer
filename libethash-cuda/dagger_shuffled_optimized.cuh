@@ -34,7 +34,7 @@ __device__ __forceinline__ uint64_t compute_hash(
 		{
 			uint2 shuffle[8];
 
-			// shuffle <- state [0-7] of thread i+p
+			// shuffle := state [0-7] of thread i+p
 			for (int j = 0; j < 8; j++) 
 			{
 				// i+p the p th thread for i/_PARALLEL_HASH th hash
@@ -50,20 +50,38 @@ __device__ __forceinline__ uint64_t compute_hash(
 		{
 			int t = bfe(a, 2u, 3u);
 
+
+
 			for (uint32_t b = 0; b < 4; b++)
 			{
+
+				uint4 dag_val[_PARALLEL_HASH];
+
 				// _PARALLEL_HASH = 8
 				for (int p = 0; p < _PARALLEL_HASH; p++)
 				{
 					offset[p] = fnv(init0[p] ^ (a + b), ((uint32_t *)&mix[p])[b]) % d_dag_size;
 					offset[p] = __shfl_sync(0xFFFFFFFF,offset[p], t, THREADS_PER_HASH);
+					dag_val[p] = __ldg( &(d_dag[offset[p]].uint4s[thread_id]) );
 				}
+
+//				#pragma unroll
+//				for (int p = 0; p < _PARALLEL_HASH; p++)
+//				{
+//					dag_val[p] = __ldg( &(d_dag[offset[p]].uint4s[thread_id]) );
+//				}
 				#pragma unroll
 				for (int p = 0; p < _PARALLEL_HASH; p++)
 				{
-					mix[p] = fnv4(mix[p], d_dag[offset[p]].uint4s[thread_id]); // bottleneck
+					mix[p] = fnv4(mix[p], dag_val[p]);
 				}
 
+//				// original ver
+//				#pragma unroll
+//				for (int p = 0; p < _PARALLEL_HASH; p++)
+//				{
+//					mix[p] = fnv4(mix[p], d_dag[offset[p]].uint4s[thread_id]); // bottleneck
+//				}
 			}
 		}
 

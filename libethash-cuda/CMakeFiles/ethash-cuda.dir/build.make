@@ -59,7 +59,7 @@ include libethash-cuda/CMakeFiles/ethash-cuda.dir/flags.make
 
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash-cuda_generated_ethash_cuda_miner_kernel.cu.o: libethash-cuda/cuda_helper.h
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash-cuda_generated_ethash_cuda_miner_kernel.cu.o: libethash-cuda/dagger_shared.cuh
-libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash-cuda_generated_ethash_cuda_miner_kernel.cu.o: libethash-cuda/dagger_shuffled.cuh
+libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash-cuda_generated_ethash_cuda_miner_kernel.cu.o: libethash-cuda/dagger_shuffled_optimized.cuh
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash-cuda_generated_ethash_cuda_miner_kernel.cu.o: libethash-cuda/ethash_cuda_miner_kernel.cu
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash-cuda_generated_ethash_cuda_miner_kernel.cu.o: libethash-cuda/ethash_cuda_miner_kernel.h
 libethash-cuda/CMakeFiles/ethash-cuda.dir/ethash-cuda_generated_ethash_cuda_miner_kernel.cu.o: libethash-cuda/ethash_cuda_miner_kernel_globals.h

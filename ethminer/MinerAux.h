@@ -747,13 +747,18 @@ private:
 			uint64_t rate = mp.rate();
 
 			cout << rate << endl;
-			results.push_back(rate);
+			if (i > 2){
+				results.push_back(rate);
+
+			}
 			//mean += rate;
 		}
 		f.stop();
 
+		cout << "results.size(): " << results.size() << endl;
+
 		uint64_t avg = 0, max = 0, min = 9999999999;
-		double stdd;
+		double stdd = 0;
 
 		for(list<uint64_t>::iterator it=results.begin();it!=results.end();++it) {
 			avg += *it;
@@ -1162,7 +1167,7 @@ private:
 	unsigned m_benchmarkWarmup = 15;
 	unsigned m_parallelHash    = 8;
 	unsigned m_benchmarkTrial = 3;
-	unsigned m_benchmarkTrials = 5;
+	unsigned m_benchmarkTrials = 30;
 	unsigned m_benchmarkBlock = 0;
 	/// Farm params
 	string m_farmURL = "http://127.0.0.1:8545";

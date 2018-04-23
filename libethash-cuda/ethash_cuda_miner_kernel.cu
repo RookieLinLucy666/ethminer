@@ -19,7 +19,7 @@
 #else
 #include "keccak.cuh"
 //#include "dagger_shuffled.cuh"
-#include "dagger_shuffled_optimized.cuh"
+#include "dagger_shuffled_optimized2.cuh"
 #endif
 //
 

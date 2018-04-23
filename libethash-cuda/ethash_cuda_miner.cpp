@@ -59,7 +59,7 @@ struct CUDAChannel: public LogChannel
 // gotcha!
 unsigned const ethash_cuda_miner::c_defaultBlockSize = 128;
 unsigned const ethash_cuda_miner::c_defaultGridSize = 8192; // * CL_DEFAULT_LOCAL_WORK_SIZE
-unsigned const ethash_cuda_miner::c_defaultNumStreams = 1;
+unsigned const ethash_cuda_miner::c_defaultNumStreams = 2;
 
 ethash_cuda_miner::search_hook::~search_hook() {}
 
