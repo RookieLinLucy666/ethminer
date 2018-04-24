@@ -18,8 +18,8 @@
 #include "dagger_shared.cuh"
 #else
 #include "keccak.cuh"
-#include "dagger_shuffled.cuh"
-//#include "dagger_shuffled_optimized.cuh"
+//#include "dagger_shuffled.cuh"
+#include "dagger_shuffled_sp.cuh"
 #endif
 //
 
