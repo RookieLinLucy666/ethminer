@@ -141,6 +141,8 @@ message("")
 
 include(EthCompilerSettings)
 
+include_directories(BEFORE /localhome/runchano/cuda-toolkit/include)
+
 createBuildInfo()
 
 add_subdirectory(libdevcore)
